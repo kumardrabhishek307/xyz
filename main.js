@@ -546,19 +546,36 @@ let current = 0;
 let autoPlay;
 
 function switchTab(index) {
-  tabs.forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tech-panel').forEach(p => p.classList.remove('active'));
-  
-  tabs[index].classList.add('active');
-  document.querySelectorAll('.tech-panel')[index]?.classList.add('active');
-  current = index;
+  const panels = document.querySelectorAll('.tech-panel');
+  const currentPanel = panels[current];
+
+  // Fade out current
+  if (currentPanel) {
+    currentPanel.classList.add('fading');
+    currentPanel.classList.remove('active');
+  }
+
+  setTimeout(() => {
+    if (currentPanel) currentPanel.classList.remove('fading');
+
+    tabs.forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    panels.forEach(p => p.classList.remove('active'));
+
+    tabs[index].classList.add('active');
+    tabs[index].setAttribute('aria-selected', 'true');
+    panels[index]?.classList.add('active');
+    current = index;
+  }, 400); // matches fade-out duration
 }
 
 function startAutoPlay() {
   autoPlay = setInterval(() => {
     const next = (current + 1) % tabs.length;
     switchTab(next);
-  }, 3000); // 3 seconds per tab
+  }, 6000); // 3 seconds per tab
 }
 
 function stopAutoPlay() {
