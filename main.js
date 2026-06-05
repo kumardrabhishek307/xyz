@@ -593,6 +593,24 @@ tabs.forEach((tab, i) => {
 
 startAutoPlay();
 
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const answer = btn.nextElementSibling;
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+    document.querySelectorAll('.faq-question').forEach(other => {
+      other.setAttribute('aria-expanded', 'false');
+      other.nextElementSibling.classList.remove('open');
+    });
+
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      answer.classList.add('open');
+    }
+  });
+});
+
  // Duplicate cards for seamless infinite loop
   const track = document.getElementById('carouselTrack');
   track.innerHTML += track.innerHTML;
+
