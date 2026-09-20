@@ -1,0 +1,377 @@
+/* ==========================================================
+   blog.css — Dr. Abhishek Dental & Oral Cancer Centre
+   Shared stylesheet for every page under /blog/
+   Mobile-first · no JavaScript required · print friendly
+   Link from each post:  <link rel="stylesheet" href="/blog/blog.css">
+   ========================================================== */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  --ink: #0c2a3e;          /* headings */
+  --text: #23404f;         /* body copy */
+  --muted: #566f7f;        /* meta, captions */
+  --sky: #0ea5e9;          /* brand accent (matches main site) */
+  --sky-deep: #0369a1;     /* links, buttons (AA contrast on white) */
+  --sky-darker: #075985;
+  --mist: #f0f9ff;         /* soft panels */
+  --mist-2: #e0f2fe;
+  --line: #d3e6f2;         /* borders */
+  --white: #ffffff;
+  --warn-bg: #fff8e6;
+  --warn-line: #f59e0b;
+  --warn-ink: #7a4b00;
+  --danger-bg: #fff1f2;
+  --danger-line: #e11d48;
+  --danger-ink: #9f1239;
+  --ok-bg: #ecfdf5;
+  --ok-line: #10b981;
+  --ok-ink: #065f46;
+  --wa: #128c4a;           /* WhatsApp green, AA on white text */
+
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Devanagari", Arial, sans-serif;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(12, 42, 62, .06), 0 6px 20px rgba(12, 42, 62, .06);
+  --header-h: 64px;
+  --measure: 720px;        /* reading column */
+}
+
+/* ---------- 2. Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.0625rem;        /* 17px */
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--white);
+  overflow-wrap: break-word;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+img, svg, video { max-width: 100%; height: auto; }
+a { color: var(--sky-deep); text-underline-offset: 3px; }
+a:hover { color: var(--sky-darker); }
+:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.skip-link {
+  position: absolute; left: 12px; top: -60px;
+  background: var(--ink); color: #fff; padding: 10px 16px;
+  border-radius: var(--radius-sm); z-index: 200; text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+/* ---------- 3. Layout ---------- */
+.wrap {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: max(18px, env(safe-area-inset-left, 0)) max(18px, env(safe-area-inset-right, 0));
+}
+.article-body { max-width: var(--measure); margin-inline: auto; }
+
+/* ---------- 4. Site header ---------- */
+.blog-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 255, 255, .96);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(1.4) blur(8px);
+  -webkit-backdrop-filter: saturate(1.4) blur(8px);
+}
+.blog-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; min-height: var(--header-h);
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); min-width: 0; }
+.brand img { width: 40px; height: 40px; object-fit: contain; flex: none; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.brand-name { font-weight: 700; font-size: 1rem; }
+.brand-sub { font-size: .72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.header-links { display: none; gap: 22px; align-items: center; }
+.header-links a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
+.header-links a:hover { color: var(--sky-deep); }
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 10px 20px;
+  font: 600 .95rem/1.2 var(--font);
+  color: #fff; background: var(--sky-deep);
+  border: 2px solid var(--sky-deep); border-radius: 999px;
+  text-decoration: none; cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.btn:hover { background: var(--sky-darker); border-color: var(--sky-darker); color: #fff; }
+.btn-outline { background: transparent; color: var(--sky-deep); }
+.btn-outline:hover { background: var(--mist-2); color: var(--sky-darker); }
+.btn-wa { background: var(--wa); border-color: var(--wa); }
+.btn-wa:hover { background: #0e6f3b; border-color: #0e6f3b; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+
+/* ---------- 6. Breadcrumb ---------- */
+.crumbs { font-size: .85rem; color: var(--muted); padding: 16px 0 0; }
+.crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 8px; }
+.crumbs li + li::before { content: "/"; margin-right: 8px; color: var(--line); }
+.crumbs a { color: var(--muted); }
+.crumbs [aria-current] { color: var(--ink); font-weight: 500; }
+
+/* ---------- 7. Article head ---------- */
+.article-head { padding: 20px 0 8px; }
+.article-head .kicker {
+  display: inline-block; margin: 0 0 12px;
+  padding: 4px 12px; font-size: .82rem; font-weight: 600;
+  color: var(--sky-darker); background: var(--mist-2); border-radius: 999px;
+}
+.article-head h1 {
+  margin: 0 0 14px; color: var(--ink);
+  font-size: clamp(1.75rem, 5.6vw, 2.75rem);
+  line-height: 1.15; letter-spacing: -.02em; font-weight: 700;
+}
+.lede { font-size: 1.15rem; color: var(--text); margin: 0 0 18px; }
+.meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  padding: 14px 0; margin-top: 8px;
+  border-block: 1px solid var(--line);
+  font-size: .9rem; color: var(--muted);
+}
+.meta strong { color: var(--ink); font-weight: 600; }
+.meta .avatar {
+  width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--mist-2); flex: none;
+}
+.meta-block { display: flex; align-items: center; gap: 10px; }
+.meta-block span { display: block; line-height: 1.35; }
+
+/* ---------- 8. Prose ---------- */
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 {
+  margin-top: 2.2em; margin-bottom: .4em; color: var(--ink);
+  font-size: clamp(1.4rem, 4.2vw, 1.85rem);
+  line-height: 1.25; letter-spacing: -.01em; font-weight: 700;
+  padding-top: .2em;
+}
+.prose h3 {
+  margin-top: 1.7em; margin-bottom: .3em; color: var(--ink);
+  font-size: 1.2rem; line-height: 1.35; font-weight: 700;
+}
+.prose p { margin-block: 0; }
+.prose ul, .prose ol { padding-left: 1.3em; margin-block: 0; }
+.prose li + li { margin-top: .45em; }
+.prose li::marker { color: var(--sky); font-weight: 700; }
+.prose strong { color: var(--ink); }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.4em 0; }
+
+/* ---------- 9. Table of contents ---------- */
+.toc {
+  margin: 24px 0 8px; padding: 18px 20px;
+  background: var(--mist); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.toc-title { margin: 0 0 8px; font-weight: 700; color: var(--ink); font-size: 1rem; }
+.toc ol { margin: 0; padding-left: 1.25em; columns: 1; }
+.toc li { margin: 4px 0; break-inside: avoid; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+/* ---------- 10. Callouts ---------- */
+.callout {
+  padding: 16px 18px; border-radius: var(--radius);
+  border: 1px solid var(--line); border-left-width: 5px;
+  background: var(--mist); border-left-color: var(--sky);
+}
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child { margin-bottom: 0; }
+.callout-title { display: block; margin-bottom: 6px; font-weight: 700; color: var(--ink); }
+.callout-warn   { background: var(--warn-bg);   border-color: #fde3a6; border-left-color: var(--warn-line); }
+.callout-warn .callout-title   { color: var(--warn-ink); }
+.callout-danger { background: var(--danger-bg); border-color: #fecdd3; border-left-color: var(--danger-line); }
+.callout-danger .callout-title { color: var(--danger-ink); }
+.callout-ok     { background: var(--ok-bg);     border-color: #a7f3d0; border-left-color: var(--ok-line); }
+.callout-ok .callout-title     { color: var(--ok-ink); }
+
+/* ---------- 11. Do / Don't columns ---------- */
+.split { display: grid; gap: 14px; }
+.split-card { padding: 16px 18px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--white); }
+.split-card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.split-card ul { margin: 0; padding-left: 1.2em; }
+.split-do   { border-top: 4px solid var(--ok-line); }
+.split-dont { border-top: 4px solid var(--danger-line); }
+
+/* ---------- 12. Tables (stack into cards on phones) ---------- */
+.table-wrap { margin-block: 1.4em; }
+table { width: 100%; border-collapse: collapse; font-size: .95rem; line-height: 1.5; }
+caption { text-align: left; font-weight: 700; color: var(--ink); padding: 0 0 10px; font-size: 1rem; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+thead th { background: var(--ink); color: #fff; font-weight: 600; font-size: .88rem; }
+thead th:first-child { border-top-left-radius: var(--radius-sm); }
+thead th:last-child  { border-top-right-radius: var(--radius-sm); }
+tbody th { color: var(--ink); font-weight: 600; }
+tbody tr:nth-child(even) { background: var(--mist); }
+
+/* Phones: each row becomes a labelled card (uses data-label on <td>) */
+@media (max-width: 719px) {
+  .table-stack thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .table-stack, .table-stack tbody, .table-stack tr, .table-stack th, .table-stack td { display: block; width: 100%; }
+  .table-stack tr {
+    margin-bottom: 12px; border: 1px solid var(--line);
+    border-radius: var(--radius); background: var(--white) !important;
+    overflow: hidden;
+  }
+  .table-stack tbody th {
+    background: var(--mist-2); border-bottom: 1px solid var(--line);
+    padding: 10px 14px; font-size: 1rem;
+  }
+  .table-stack td { border-bottom: 1px solid var(--line); padding: 10px 14px; }
+  .table-stack td:last-child { border-bottom: 0; }
+  .table-stack td::before {
+    content: attr(data-label);
+    display: block; margin-bottom: 2px;
+    font-size: .75rem; font-weight: 700; letter-spacing: .02em;
+    color: var(--muted);
+  }
+}
+
+/* ---------- 13. Numbered steps (only for real sequences) ---------- */
+.steps { list-style: none; padding: 0 !important; counter-reset: step; }
+.steps > li {
+  position: relative; counter-increment: step;
+  padding: 2px 0 2px 48px; margin: 0 0 16px !important;
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 0;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--sky-deep); color: #fff; font-weight: 700; font-size: .95rem;
+}
+.steps > li::marker { content: none; }
+.steps strong { display: block; }
+
+/* ---------- 14. FAQ (native <details>, no JS) ---------- */
+.faq { display: grid; gap: 10px; margin-top: 14px; }
+.faq details { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  padding: 15px 18px; font-weight: 600; color: var(--ink); line-height: 1.4;
+  min-height: 48px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; flex: none;
+  width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--mist-2); color: var(--sky-darker); font-size: 1.25rem; line-height: 1;
+}
+.faq details[open] summary::after { content: "\2212"; }
+.faq details[open] { border-color: var(--sky); box-shadow: var(--shadow); }
+.faq .answer { padding: 0 18px 16px; }
+.faq .answer > :first-child { margin-top: 0; }
+.faq .answer > :last-child { margin-bottom: 0; }
+
+/* ---------- 15. Location chips ---------- */
+.chips { list-style: none; padding: 0 !important; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { margin: 0 !important; }
+.chips span {
+  display: inline-block; padding: 6px 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--mist); color: var(--ink); font-size: .92rem; font-weight: 500;
+}
+
+/* ---------- 16. CTA box ---------- */
+.cta-box {
+  margin-block: 2.4em; padding: 26px 22px;
+  background: var(--ink); color: #dbeafe; border-radius: 20px;
+}
+.cta-box h2, .cta-box h3 { margin: 0 0 8px !important; color: #fff; font-size: 1.4rem; line-height: 1.25; padding: 0; }
+.cta-box p { margin: 0 0 16px; color: #cfe3f1; }
+.cta-box .cta-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.cta-box .btn { background: #fff; color: var(--ink); border-color: #fff; }
+.cta-box .btn:hover { background: var(--mist-2); border-color: var(--mist-2); color: var(--ink); }
+.cta-box .btn-outline { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .55); }
+.cta-box .btn-outline:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+.cta-box a:not(.btn) { color: #fff; }
+
+/* ---------- 17. Author box ---------- */
+.author-box {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px; margin-block: 2em 1em;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--mist);
+}
+.author-box img { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid #fff; }
+.author-box h3 { margin: 0 0 4px !important; font-size: 1.05rem; }
+.author-box p { margin: 0; font-size: .95rem; }
+
+.disclaimer { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 1.6em; }
+
+/* ---------- 18. Related posts ---------- */
+.related { margin-block: 2em; display: grid; gap: 12px; }
+.related a {
+  display: block; padding: 16px 18px; text-decoration: none;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--white);
+  color: var(--ink); font-weight: 600;
+}
+.related a small { display: block; margin-top: 4px; font-weight: 400; color: var(--muted); font-size: .88rem; }
+.related a:hover { border-color: var(--sky); box-shadow: var(--shadow); }
+
+/* ---------- 19. Footer ---------- */
+.blog-footer { margin-top: 3em; padding: 32px 0 110px; background: var(--mist); border-top: 1px solid var(--line); font-size: .93rem; }
+.footer-grid { display: grid; gap: 22px; }
+.blog-footer h2 { margin: 0 0 8px; font-size: 1rem; color: var(--ink); }
+.blog-footer p, .blog-footer address { margin: 0 0 6px; font-style: normal; line-height: 1.6; }
+.blog-footer ul { list-style: none; margin: 0; padding: 0; }
+.blog-footer li { margin: 4px 0; }
+.footer-legal { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+
+/* ---------- 20. Floating call / WhatsApp ---------- */
+.float-actions {
+  position: fixed; z-index: 90;
+  left: 0; right: 0; bottom: 0;
+  display: flex; gap: 10px;
+  padding: 10px max(14px, env(safe-area-inset-right, 0)) calc(10px + env(safe-area-inset-bottom, 0)) max(14px, env(safe-area-inset-left, 0));
+  background: rgba(255, 255, 255, .97);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -6px 18px rgba(12, 42, 62, .08);
+}
+.float-actions .btn { flex: 1; }
+
+/* ---------- 21. Larger screens ---------- */
+@media (min-width: 720px) {
+  body { font-size: 1.125rem; }
+  .header-links { display: flex; }
+  .toc ol { columns: 2; column-gap: 28px; }
+  .split { grid-template-columns: 1fr 1fr; }
+  .related { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+  .cta-box { padding: 34px 36px; }
+  .author-box { padding: 24px; }
+  /* Desktop: floating bar becomes a compact corner stack */
+  .float-actions {
+    left: auto; right: 20px; bottom: 20px;
+    flex-direction: column; padding: 0;
+    background: transparent; border: 0; box-shadow: none;
+  }
+  .float-actions .btn { flex: none; box-shadow: var(--shadow); }
+  .blog-footer { padding-bottom: 40px; }
+}
+
+/* ---------- 22. Print ---------- */
+@media print {
+  .blog-header, .float-actions, .cta-box, .skip-link { display: none !important; }
+  body { font-size: 11pt; color: #000; }
+  a { color: #000; text-decoration: none; }
+  .faq details:not([open]) .answer { display: block; }
+  table, .callout, .split-card { break-inside: avoid; }
+}
